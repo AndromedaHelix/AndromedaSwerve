@@ -20,7 +20,5 @@ public class AndromedaModule {
         this.driveMotor = new SuperTalonFX(driveID, GlobalIdleMode.brake, false);
         this.steeringMotor = new SuperTalonFX(steeringID, GlobalIdleMode.brake, false);
         this.steeringEncoder = new CANCoder(absEncoderID);
-
-        
     }
 }
