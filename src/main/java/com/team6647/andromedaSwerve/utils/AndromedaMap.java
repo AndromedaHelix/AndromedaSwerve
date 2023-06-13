@@ -9,7 +9,7 @@ package com.team6647.andromedaSwerve.utils;
  */
 public class AndromedaMap {
 
-    /* IDs are set from left to right, and from top to bottom */
+    /* IDs are set clockwise starting from front right */
     public static final int driveID1 = 1;
     public static final int steerID1 = 2;
     public static final int absEncoder1 = 3;
