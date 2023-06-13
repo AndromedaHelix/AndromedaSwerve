@@ -9,12 +9,16 @@ import com.ctre.phoenix.sensors.CANCoder;
 import com.team6647.andromedaSwerve.utils.AndromedaModuleConstants;
 
 public class AndromedaModule {
+    private int moduleNumber;
+
     private SuperTalonFX driveMotor;
     private SuperTalonFX steeringMotor;
     private CANCoder steeringEncoder;
     private AndromedaModuleConstants constants;
 
-    public AndromedaModule(AndromedaModuleConstants constants){
+    public AndromedaModule(int moduleNumber, AndromedaModuleConstants constants) {
+        this.moduleNumber = moduleNumber;
+        
         this.driveMotor = new SuperTalonFX(constants.driveMotorID, GlobalIdleMode.brake, false);
         this.steeringMotor = new SuperTalonFX(constants.steeringMotorID, GlobalIdleMode.Coast, false);
         this.steeringEncoder = new CANCoder(constants.absCanCoderID);
