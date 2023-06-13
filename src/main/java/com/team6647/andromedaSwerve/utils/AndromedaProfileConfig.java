@@ -38,16 +38,22 @@ public final class AndromedaProfileConfig {
         this.canCoderInvert = cancoderInvert;
     }
 
+    /* Base Andromeda Swerve configuration profile */
     public static AndromedaProfileConfig andromedaSwerveConfig() {
         double wheelDiameter = Units.inchesToMeters(4.0);
 
         double steeringGearRatio = ((150.0 / 7.0) / 1.0);
         double driveGearRatio = (6.75 / 1.0);
 
-        double turningKp = 0.0;
+        double turningKp = 0.0; // <- TODO Modify
         double turningKi = 0.0;
         double turningKd = 0.0;
         double turningKf = 0.0;
+
+        double driveKp = 0.0;
+        double driveKi = 0.0;
+        double driveKd = 0.0;
+        double driveKf = 0.0;
 
         boolean driveMotorInvert = false;
         boolean angleMotorInvert = true;
