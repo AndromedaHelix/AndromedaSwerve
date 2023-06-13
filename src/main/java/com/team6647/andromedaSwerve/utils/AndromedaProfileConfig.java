@@ -18,12 +18,20 @@ public final class AndromedaProfileConfig {
     public final double turningKi;
     public final double turningKd;
     public final double turningKf;
+
+    public final double driveKp;
+    public final double driveKi;
+    public final double driveKd;
+    public final double driveKf;
+
     public final boolean driveMotorInvert;
     public final boolean steeringMotorInvert;
     public final boolean canCoderInvert;
 
     public AndromedaProfileConfig(double steeringGearRatio, double driveGearRatio, double wheelDiameter,
-            double turningKp, double turningKi, double turningKd, double turningKf, boolean driveMotorInvert,
+            double turningKp, double turningKi, double turningKd, double turningKf, double driveKp, double driveKi,
+            double driveKd, double driveKf,
+            boolean driveMotorInvert,
             boolean steeringMotorInvert, boolean cancoderInvert) {
         this.steeringGearRatio = steeringGearRatio;
         this.driveGearRatio = driveGearRatio;
@@ -33,6 +41,10 @@ public final class AndromedaProfileConfig {
         this.turningKi = turningKi;
         this.turningKd = turningKd;
         this.turningKf = turningKf;
+        this.driveKp = driveKp;
+        this.driveKi = driveKi;
+        this.driveKd = driveKd;
+        this.driveKf = driveKf;
         this.driveMotorInvert = driveMotorInvert;
         this.steeringMotorInvert = steeringMotorInvert;
         this.canCoderInvert = cancoderInvert;
@@ -50,7 +62,7 @@ public final class AndromedaProfileConfig {
         double turningKd = 0.0;
         double turningKf = 0.0;
 
-        double driveKp = 0.0;
+        double driveKp = 0.0; // <- TODO Modify
         double driveKi = 0.0;
         double driveKd = 0.0;
         double driveKf = 0.0;
@@ -60,6 +72,7 @@ public final class AndromedaProfileConfig {
         boolean canCoderInvert = false;
 
         return new AndromedaProfileConfig(steeringGearRatio, driveGearRatio, wheelDiameter, turningKp, turningKi,
-                turningKd, turningKf, driveMotorInvert, angleMotorInvert, canCoderInvert);
+                turningKd, turningKf, driveKp, driveKi, driveKd, driveKf, driveMotorInvert, angleMotorInvert,
+                canCoderInvert);
     }
 }
