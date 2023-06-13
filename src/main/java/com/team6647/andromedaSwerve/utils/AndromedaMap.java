@@ -4,8 +4,10 @@
 
 package com.team6647.andromedaSwerve.utils;
 
+import edu.wpi.first.math.geometry.Rotation2d;
+
 /**
- * References the IDs of the motors & PID constants
+ * References the IDs of the motors & angle offsets
  */
 public class AndromedaMap {
 
@@ -13,33 +15,28 @@ public class AndromedaMap {
     public static final int driveID1 = 1;
     public static final int steerID1 = 2;
     public static final int absEncoder1 = 3;
-
-    public static final double turning1P = 0.0;
-    public static final double turning1I = 0.0;
-    public static final double turning1D = 0.0;
+    public static final Rotation2d mod1Angleoffset = Rotation2d.fromDegrees(0.0);
+    public static final AndromedaModuleConstants mod1Const = new AndromedaModuleConstants(steerID1, driveID1,
+            absEncoder1, mod1Angleoffset);
 
     public static final int driveID2 = 4;
     public static final int steerID2 = 5;
     public static final int absEncoder2 = 6;
-
-    public static final double turning2P = 0.0;
-    public static final double turning2I = 0.0;
-    public static final double turning2D = 0.0;
+    public static final Rotation2d mod2Angleoffset = Rotation2d.fromDegrees(0.0);
+    public static final AndromedaModuleConstants mod2Const = new AndromedaModuleConstants(steerID2, driveID2,
+            absEncoder2, mod2Angleoffset);
 
     public static final int drivelID3 = 7;
-    public static final int steerID4 = 8;
+    public static final int steerID3 = 8;
     public static final int absEncoder3 = 9;
+    public static final Rotation2d mod3Angleoffset = Rotation2d.fromDegrees(0.0);
+    public static final AndromedaModuleConstants mod3Const = new AndromedaModuleConstants(steerID3, drivelID3,
+            absEncoder3, mod3Angleoffset);
 
-    public static final double turning3P = 0.0;
-    public static final double turning3I = 0.0;
-    public static final double turning3D = 0.0;
-
-    public static final int driveID5 = 10;
-    public static final int steerID5 = 11;
+    public static final int driveID4 = 10;
+    public static final int steerID4 = 11;
     public static final int absEncoder4 = 12;
-
-    public static final double turning4P = 0.0;
-    public static final double turning4I = 0.0;
-    public static final double turning4D = 0.0;
-
+    public static final Rotation2d mod4Angleoffset = Rotation2d.fromDegrees(0.0);
+    public static final AndromedaModuleConstants mod4Const = new AndromedaModuleConstants(steerID4, driveID4,
+            absEncoder4, mod4Angleoffset);
 }
