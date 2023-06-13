@@ -6,6 +6,9 @@ package com.team6647.andromedaSwerve.utils;
 
 import edu.wpi.first.math.geometry.Rotation2d;
 
+/**
+ * Helper class, is used as a parameter when creating a new module
+ */
 public class AndromedaModuleConstants {
     public final int steeringMotorID;
     public final int driveMotorID;
