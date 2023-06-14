@@ -15,125 +15,144 @@ import edu.wpi.first.math.util.Units;
 /* Represents an entire profile configuration for a module */
 public final class AndromedaProfileConfig {
 
-    public final double steeringGearRatio;
-    public final double driveGearRatio;
+        public final double steeringGearRatio;
+        public final double driveGearRatio;
 
-    public final double wheelDiameter;
-    public final double wheelCircumference;
+        public final double wheelDiameter;
+        public final double wheelCircumference;
 
-    public final boolean driveMotorInvert;
-    public final boolean steeringMotorInvert;
-    public final boolean canCoderInvert;
+        public final boolean driveMotorInvert;
+        public final boolean steeringMotorInvert;
+        public final boolean canCoderInvert;
 
-    public final CANCoderConfiguration cancoderConfig;
-    public final TalonFXConfiguration driveMotorConfiguration;
-    public final TalonFXConfiguration turningMotorConfiguration;
+        public final CANCoderConfiguration cancoderConfig;
+        public final TalonFXConfiguration driveMotorConfiguration;
+        public final TalonFXConfiguration turningMotorConfiguration;
 
-    public AndromedaProfileConfig(double steeringGearRatio, double driveGearRatio, double wheelDiameter,
-            TalonFXConfiguration driveMotorConfiguration, TalonFXConfiguration turningMotorConfiguration,
-            CANCoderConfiguration cancoderConfiguration,
-            boolean driveMotorInvert,
-            boolean steeringMotorInvert, boolean cancoderInvert) {
-        this.steeringGearRatio = steeringGearRatio;
-        this.driveGearRatio = driveGearRatio;
-        this.wheelDiameter = wheelDiameter;
-        this.wheelCircumference = wheelDiameter * Math.PI;
-        
-        this.driveMotorConfiguration = driveMotorConfiguration;
-        this.turningMotorConfiguration = turningMotorConfiguration;
+        public AndromedaProfileConfig(double steeringGearRatio, double driveGearRatio, double wheelDiameter,
+                        TalonFXConfiguration driveMotorConfiguration, TalonFXConfiguration turningMotorConfiguration,
+                        CANCoderConfiguration cancoderConfiguration,
+                        boolean driveMotorInvert,
+                        boolean steeringMotorInvert, boolean cancoderInvert) {
+                this.steeringGearRatio = steeringGearRatio;
+                this.driveGearRatio = driveGearRatio;
+                this.wheelDiameter = wheelDiameter;
+                this.wheelCircumference = wheelDiameter * Math.PI;
 
-        this.cancoderConfig = cancoderConfiguration;
+                this.driveMotorConfiguration = driveMotorConfiguration;
+                this.turningMotorConfiguration = turningMotorConfiguration;
 
-        this.driveMotorInvert = driveMotorInvert;
-        this.steeringMotorInvert = steeringMotorInvert;
-        this.canCoderInvert = cancoderInvert;
-    }
+                this.cancoderConfig = cancoderConfiguration;
 
-    /* Base Andromeda Swerve configuration profile */
-    public static AndromedaProfileConfig andromedaSwerveConfig() {
-        double wheelDiameter = Units.inchesToMeters(4.0);
+                this.driveMotorInvert = driveMotorInvert;
+                this.steeringMotorInvert = steeringMotorInvert;
+                this.canCoderInvert = cancoderInvert;
+        }
 
-        double steeringGearRatio = ((150.0 / 7.0) / 1.0);
-        double driveGearRatio = (6.75 / 1.0);
+        public static enum AndromedaProfiles {
+                ANDROMEDA_CONFIG,
+        }
 
-        double turningKp = 0.0; // <- TODO Modify
-        double turningKi = 0.0;
-        double turningKd = 0.0;
-        double turningKf = 0.0;
+        /**
+         * Gets the {@AndromedaProfileConfig} based on {@link} AndromedaProfiles}
+         * selection
+         * 
+         * @param profile Profiles selection
+         * @return {@link AndromedaProfileConfig} selection
+         */
+        public static AndromedaProfileConfig getConfig(AndromedaProfiles profile) {
+                switch (profile) {
+                        case ANDROMEDA_CONFIG:
+                                return andromedaSwerveConfig();
+                }
+                return andromedaSwerveConfig();
+        }
 
-        double driveKp = 0.0; // <- TODO Modify
-        double driveKi = 0.0;
-        double driveKd = 0.0;
-        double driveKf = 0.0;
+        /* Base Andromeda Swerve configuration profile */
+        private static AndromedaProfileConfig andromedaSwerveConfig() {
+                double wheelDiameter = Units.inchesToMeters(4.0);
 
-        boolean driveMotorInvert = false;
-        boolean angleMotorInvert = true;
-        boolean canCoderInvert = false;
+                double steeringGearRatio = ((150.0 / 7.0) / 1.0);
+                double driveGearRatio = (6.75 / 1.0);
 
-        double openLoopRamp = 0.25;
-        double closedLoopRamp = 0.0;
+                double turningKp = 0.0; // <- TODO Modify
+                double turningKi = 0.0;
+                double turningKd = 0.0;
+                double turningKf = 0.0;
 
-        /* Current Limiting */
-        int driveContinuousCurrentLimit = 35;
-        int drivePeakCurrentLimit = 60;
-        double drivePeakCurrentDuration = 0.1;
-        boolean driveEnableCurrentLimit = true;
+                double driveKp = 0.0; // <- TODO Modify
+                double driveKi = 0.0;
+                double driveKd = 0.0;
+                double driveKf = 0.0;
 
-        int angleContinuousCurrentLimit = 25;
-        int anglePeakCurrentLimit = 40;
-        double anglePeakCurrentDuration = 0.1;
-        boolean angleEnableCurrentLimit = true;
+                boolean driveMotorInvert = false;
+                boolean angleMotorInvert = true;
+                boolean canCoderInvert = false;
 
-        SupplyCurrentLimitConfiguration driveSupplyLimit = new SupplyCurrentLimitConfiguration(
-                driveEnableCurrentLimit,
-                driveContinuousCurrentLimit,
-                drivePeakCurrentLimit,
-                drivePeakCurrentDuration);
+                double openLoopRamp = 0.25;
+                double closedLoopRamp = 0.0;
 
-        SupplyCurrentLimitConfiguration angleSupplyLimit = new SupplyCurrentLimitConfiguration(
-                angleEnableCurrentLimit,
-                angleContinuousCurrentLimit,
-                anglePeakCurrentLimit,
-                anglePeakCurrentDuration);
+                /* Current Limiting */
+                int driveContinuousCurrentLimit = 35;
+                int drivePeakCurrentLimit = 60;
+                double drivePeakCurrentDuration = 0.1;
+                boolean driveEnableCurrentLimit = true;
 
-        /* CANCoder */
+                int angleContinuousCurrentLimit = 25;
+                int anglePeakCurrentLimit = 40;
+                double anglePeakCurrentDuration = 0.1;
+                boolean angleEnableCurrentLimit = true;
 
-        CANCoderConfiguration cancoderConfig = new CANCoderConfiguration();
+                SupplyCurrentLimitConfiguration driveSupplyLimit = new SupplyCurrentLimitConfiguration(
+                                driveEnableCurrentLimit,
+                                driveContinuousCurrentLimit,
+                                drivePeakCurrentLimit,
+                                drivePeakCurrentDuration);
 
-        cancoderConfig.absoluteSensorRange = AbsoluteSensorRange.Unsigned_0_to_360;
-        cancoderConfig.sensorDirection = canCoderInvert;
-        cancoderConfig.initializationStrategy = SensorInitializationStrategy.BootToAbsolutePosition;
-        cancoderConfig.sensorTimeBase = SensorTimeBase.PerSecond;
+                SupplyCurrentLimitConfiguration angleSupplyLimit = new SupplyCurrentLimitConfiguration(
+                                angleEnableCurrentLimit,
+                                angleContinuousCurrentLimit,
+                                anglePeakCurrentLimit,
+                                anglePeakCurrentDuration);
 
-        /* Drive Motor */
+                /* CANCoder */
 
-        TalonFXConfiguration driveMotorConfig = new TalonFXConfiguration();
+                CANCoderConfiguration cancoderConfig = new CANCoderConfiguration();
 
-        driveMotorConfig.slot0.kP = driveKp;
-        driveMotorConfig.slot0.kI = driveKi;
-        driveMotorConfig.slot0.kD = driveKd;
-        driveMotorConfig.slot0.kF = driveKf;
-        driveMotorConfig.supplyCurrLimit = driveSupplyLimit;
-        driveMotorConfig.openloopRamp = openLoopRamp;
-        driveMotorConfig.closedloopRamp = closedLoopRamp;
+                cancoderConfig.absoluteSensorRange = AbsoluteSensorRange.Unsigned_0_to_360;
+                cancoderConfig.sensorDirection = canCoderInvert;
+                cancoderConfig.initializationStrategy = SensorInitializationStrategy.BootToAbsolutePosition;
+                cancoderConfig.sensorTimeBase = SensorTimeBase.PerSecond;
 
-        /* Turning Motor */
+                /* Drive Motor */
 
-        TalonFXConfiguration turningMotorConfig = new TalonFXConfiguration();
+                TalonFXConfiguration driveMotorConfig = new TalonFXConfiguration();
 
-        turningMotorConfig.slot0.kP = turningKp;
-        turningMotorConfig.slot0.kI = turningKi;
-        turningMotorConfig.slot0.kD = turningKd;
-        turningMotorConfig.slot0.kF = turningKf;
-        turningMotorConfig.supplyCurrLimit = angleSupplyLimit;
+                driveMotorConfig.slot0.kP = driveKp;
+                driveMotorConfig.slot0.kI = driveKi;
+                driveMotorConfig.slot0.kD = driveKd;
+                driveMotorConfig.slot0.kF = driveKf;
+                driveMotorConfig.supplyCurrLimit = driveSupplyLimit;
+                driveMotorConfig.openloopRamp = openLoopRamp;
+                driveMotorConfig.closedloopRamp = closedLoopRamp;
 
-        return new AndromedaProfileConfig(
-                steeringGearRatio,
-                driveGearRatio,
-                wheelDiameter,
-                driveMotorConfig,
-                turningMotorConfig, cancoderConfig,
-                driveMotorInvert, angleMotorInvert,
-                canCoderInvert);
-    }
+                /* Turning Motor */
+
+                TalonFXConfiguration turningMotorConfig = new TalonFXConfiguration();
+
+                turningMotorConfig.slot0.kP = turningKp;
+                turningMotorConfig.slot0.kI = turningKi;
+                turningMotorConfig.slot0.kD = turningKd;
+                turningMotorConfig.slot0.kF = turningKf;
+                turningMotorConfig.supplyCurrLimit = angleSupplyLimit;
+
+                return new AndromedaProfileConfig(
+                                steeringGearRatio,
+                                driveGearRatio,
+                                wheelDiameter,
+                                driveMotorConfig,
+                                turningMotorConfig, cancoderConfig,
+                                driveMotorInvert, angleMotorInvert,
+                                canCoderInvert);
+        }
 }
