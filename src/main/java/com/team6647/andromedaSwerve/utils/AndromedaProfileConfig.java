@@ -75,12 +75,12 @@ public final class AndromedaProfileConfig {
                 double steeringGearRatio = ((150.0 / 7.0) / 1.0);
                 double driveGearRatio = (6.75 / 1.0);
 
-                double turningKp = 0.0; // <- TODO Modify
+                double turningKp = 0.3; // <- TODO Modify
                 double turningKi = 0.0;
                 double turningKd = 0.0;
                 double turningKf = 0.0;
 
-                double driveKp = 0.0; // <- TODO Modify
+                double driveKp = 0.3; // <- TODO Modify
                 double driveKi = 0.0;
                 double driveKd = 0.0;
                 double driveKf = 0.0;
