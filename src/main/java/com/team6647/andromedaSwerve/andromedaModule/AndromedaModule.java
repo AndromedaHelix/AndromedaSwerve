@@ -8,10 +8,12 @@ import com.andromedalib.motorControllers.SuperTalonFX;
 import com.andromedalib.motorControllers.IdleManager.GlobalIdleMode;
 import com.andromedalib.sensors.SuperCANCoder;
 import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.DemandType;
 import com.team6647.andromedaSwerve.utils.AndromedaModuleConstants;
 import com.team6647.andromedaSwerve.utils.AndromedaState;
 import com.team6647.util.Constants.SwerveConstants;
 
+import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 
@@ -24,6 +26,9 @@ public class AndromedaModule {
 
     private Rotation2d angleOffset;
     private Rotation2d lastAngle;
+
+    SimpleMotorFeedforward feedforward = new SimpleMotorFeedforward(SwerveConstants.driveKS, SwerveConstants.driveKV,
+            SwerveConstants.driveKA);
 
     public AndromedaModule(int moduleNumber, AndromedaModuleConstants constants) {
         this.moduleNumber = moduleNumber;
@@ -42,10 +47,14 @@ public class AndromedaModule {
         lastAngle = getState().angle;
     }
 
-    public void setDesiredState(SwerveModuleState desiredState) {
+    public int getModuleNumber() {
+        return moduleNumber;
+    }
+
+    public void setDesiredState(SwerveModuleState desiredState, boolean isOpenLoop) {
         desiredState = AndromedaState.optimize(desiredState, getState().angle);
         setAngle(desiredState);
-        setSpeed(desiredState);
+        setSpeed(desiredState, isOpenLoop);
     }
 
     private void setAngle(SwerveModuleState desiredState) {
@@ -58,9 +67,17 @@ public class AndromedaModule {
         lastAngle = angle;
     }
 
-    private void setSpeed(SwerveModuleState desiredState) {
-        double percentOutput = desiredState.speedMetersPerSecond / SwerveConstants.maxSpeed;
-        driveMotor.set(ControlMode.PercentOutput, percentOutput);
+    private void setSpeed(SwerveModuleState desiredState, boolean isOpenLoop) {
+        if (isOpenLoop) {
+            double percentOutput = desiredState.speedMetersPerSecond / SwerveConstants.maxSpeed;
+            driveMotor.set(ControlMode.PercentOutput, percentOutput);
+        } else {
+            double velocity = Conversions.MPSToFalcon(desiredState.speedMetersPerSecond,
+                    SwerveConstants.andromedaProfile.wheelCircumference,
+                    SwerveConstants.andromedaProfile.driveGearRatio);
+            steeringMotor.set(ControlMode.Velocity, velocity, DemandType.ArbitraryFeedForward,
+                    feedforward.calculate(desiredState.speedMetersPerSecond));
+        }
     }
 
     public SwerveModuleState getState() {
@@ -68,7 +85,7 @@ public class AndromedaModule {
                 SwerveConstants.andromedaProfile.driveGearRatio), getAngle());
     }
 
-    private void resetAbsolutePosition() {
+    public void resetAbsolutePosition() {
         steeringMotor.setSelectedSensorPosition(0);
         double encoderPosition = Conversions.degreesToFalcon(steeringEncoder.getDegrees() - angleOffset.getDegrees(),
                 SwerveConstants.andromedaProfile.steeringGearRatio);
