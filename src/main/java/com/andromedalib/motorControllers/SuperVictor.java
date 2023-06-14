@@ -92,7 +92,7 @@ public class SuperVictor extends WPI_VictorSPX implements HyperMotorController {
      * @return the velocity of the motor in meters per second
      */
     public double getVelocity(double circumference, double gearRatio) {
-        return Conversions.MPSToMeterPerSecond(getSelectedSensorVelocity(), circumference, gearRatio);
+        return Conversions.falconToMPS(getSelectedSensorVelocity(), circumference, gearRatio);
     }
 
     @Override

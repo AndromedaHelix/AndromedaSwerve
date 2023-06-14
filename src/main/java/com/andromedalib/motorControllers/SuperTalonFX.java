@@ -122,7 +122,8 @@ public class SuperTalonFX extends WPI_TalonFX implements HyperMotorController {
     }
 
     /**
-     * Gets the position of the motor controller
+     * Gets the position of the motor controller adjusted to a circumference (Useful
+     * for tank drives)
      * 
      * @param circumference Circumference of the wheel in meters
      * @param gearRatio     Gear ratio of the motor controller
@@ -134,6 +135,17 @@ public class SuperTalonFX extends WPI_TalonFX implements HyperMotorController {
     }
 
     /**
+     * Gets the motor angle adjusted to the gear ratio
+     * 
+     * @param gearRatio Gear ratio of the mechanism
+     * 
+     * @return the angle of the motor in degrees
+     */
+    public double getAngle(double gearRatio) {
+        return Conversions.falconToDegrees(getSelectedSensorPosition(), gearRatio);
+    }
+
+    /**
      * Gets the velocity of the motor controller
      * 
      * @param circumference Circumference of the wheel in meters
@@ -142,7 +154,7 @@ public class SuperTalonFX extends WPI_TalonFX implements HyperMotorController {
      * @return the velocity of the motor in meters per second
      */
     public double getVelocity(double circumference, double gearRatio) {
-        return Conversions.MPSToMeterPerSecond(getSelectedSensorVelocity(), circumference, gearRatio);
+        return Conversions.falconToMPS(getSelectedSensorVelocity(), circumference, gearRatio);
     }
 
     /**
@@ -153,5 +165,4 @@ public class SuperTalonFX extends WPI_TalonFX implements HyperMotorController {
         setSelectedSensorPosition(0);
     }
 
-    
 }
