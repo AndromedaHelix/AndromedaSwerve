@@ -7,6 +7,8 @@ package com.andromedalib.sensors;
 import com.ctre.phoenix.sensors.CANCoder;
 import com.ctre.phoenix.sensors.CANCoderConfiguration;
 
+import edu.wpi.first.math.geometry.Rotation2d;
+
 public class SuperCANCoder extends CANCoder {
 
     /**
@@ -20,5 +22,23 @@ public class SuperCANCoder extends CANCoder {
 
         this.configFactoryDefault();
         this.configAllSettings(configuration);
+    }
+
+    /**
+     * Gets the absolute degrees position
+     * 
+     * @return Absolute position in degrees
+     */
+    public double getDegrees() {
+        return getRotation().getDegrees();
+    }
+
+    /**
+     * Gets the absolute {@link Rotation2d} positions
+     * 
+     * @return Absolute positions
+     */
+    public Rotation2d getRotation() {
+        return Rotation2d.fromDegrees(getAbsolutePosition());
     }
 }
