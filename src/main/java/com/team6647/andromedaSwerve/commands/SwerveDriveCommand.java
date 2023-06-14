@@ -13,7 +13,7 @@ import com.team6647.util.Constants.SwerveConstants;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
-public class SwerveDrive extends CommandBase {
+public class SwerveDriveCommand extends CommandBase {
 
   AndromedaSwerve swerve;
   DoubleSupplier translationY;
@@ -22,7 +22,7 @@ public class SwerveDrive extends CommandBase {
   BooleanSupplier fieldOriented;
 
   /** Creates a new SwerveDrive. */
-  public SwerveDrive(AndromedaSwerve andromedaSwerve, DoubleSupplier translationX, DoubleSupplier translationY,
+  public SwerveDriveCommand(AndromedaSwerve andromedaSwerve, DoubleSupplier translationX, DoubleSupplier translationY,
       DoubleSupplier rotation, BooleanSupplier fieldOrientedControl) {
     this.swerve = andromedaSwerve;
     this.translationY = translationY;
