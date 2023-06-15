@@ -40,7 +40,7 @@ public class RobotContainer extends SuperRobotContainer {
         new SwerveDriveCommand(
             andromedaSwerve,
             () -> -OperatorConstants.driverController1.getLeftY(),
-            () -> -OperatorConstants.driverController1.getLeftX(),
+            () -> OperatorConstants.driverController1.getLeftX(),
             () -> -OperatorConstants.driverController1.getRightX(),
             () -> OperatorConstants.driverController1.leftStick().getAsBoolean()));
   }
