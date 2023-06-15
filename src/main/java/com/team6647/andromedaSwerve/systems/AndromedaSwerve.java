@@ -45,11 +45,13 @@ public class AndromedaSwerve extends SubsystemBase {
   @Override
   public void periodic() {
     for (AndromedaModule andromedaModule : modules) {
-      SmartDashboard.putNumber("Mod " + andromedaModule.getModuleNumber() + " Integrated",
-          andromedaModule.getPosition().angle.getDegrees());
+      SmartDashboard.putNumber("Mod " + andromedaModule.getModuleNumber() + " Angle",
+          andromedaModule.getState().angle.getDegrees());
       SmartDashboard.putNumber("Mod " + andromedaModule.getModuleNumber() + " Velocity",
           andromedaModule.getState().speedMetersPerSecond);
     }
+
+    SmartDashboard.putNumber("Angle", navx.getClampedYaw().getDegrees());
   }
 
   public void resetAbsoluteModules() {
