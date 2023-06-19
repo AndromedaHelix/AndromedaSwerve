@@ -10,16 +10,17 @@ import com.andromedalib.math.Functions;
 import com.team6647.andromedaSwerve.systems.AndromedaSwerve;
 import com.team6647.util.Constants.SwerveConstants;
 
+import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
 public class SwerveDriveCommand extends CommandBase {
 
   AndromedaSwerve swerve;
-  DoubleSupplier translationY;
-  DoubleSupplier translationX;
-  DoubleSupplier rotation;
+  DoubleSupplier translationY, translationX, rotation;
   BooleanSupplier fieldOriented;
+
+  SlewRateLimiter xLimiter, yLimiter, turningLimiter;
 
   /** Creates a new SwerveDrive. */
   public SwerveDriveCommand(AndromedaSwerve andromedaSwerve, DoubleSupplier translationX, DoubleSupplier translationY,
@@ -29,6 +30,10 @@ public class SwerveDriveCommand extends CommandBase {
     this.translationX = translationX;
     this.rotation = rotation;
     this.fieldOriented = fieldOrientedControl;
+
+    xLimiter = new SlewRateLimiter(SwerveConstants.maxAcceleration);
+    yLimiter = new SlewRateLimiter(SwerveConstants.maxAcceleration);
+    turningLimiter = new SlewRateLimiter(SwerveConstants.maxAngularAcceleration);
 
     addRequirements(swerve);
   }
@@ -40,9 +45,13 @@ public class SwerveDriveCommand extends CommandBase {
     double translationXVal = Functions.handleDeadband(translationX.getAsDouble(), SwerveConstants.deadband);
     double rotationVal = Functions.handleDeadband(rotation.getAsDouble(), SwerveConstants.deadband);
 
+    double ySpeed = yLimiter.calculate(translationYVal);
+    double xSpeed = xLimiter.calculate(translationXVal);
+    double rotationSpeed = turningLimiter.calculate(rotationVal);
+
     swerve.drive(
-        new Translation2d(translationYVal, translationXVal).times(SwerveConstants.maxSpeed),
-        rotationVal * SwerveConstants.maxAngularVelocity,
+        new Translation2d(ySpeed, xSpeed).times(SwerveConstants.maxSpeed),
+        rotationSpeed * SwerveConstants.maxAngularVelocity,
         !fieldOriented.getAsBoolean(), // DEBUG fieldOriented.getAsBoolean()
         true);
   }

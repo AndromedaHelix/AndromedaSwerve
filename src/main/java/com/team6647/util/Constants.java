@@ -54,8 +54,10 @@ public class Constants {
 
                 /* Swerve Profiling Values */
                 /** Meters per Second */
-                public static final double maxSpeed = 4.5; // TODO: TUNE
+                public static final double maxSpeed = 4.5;
+                public static final double maxAcceleration = 3.5;
                 /** Radians per Second */
-                public static final double maxAngularVelocity = 10.0; // TODO: TUNE
+                public static final double maxAngularVelocity = 10.0;
+                public static final double maxAngularAcceleration = 3.5;
         }
 }
