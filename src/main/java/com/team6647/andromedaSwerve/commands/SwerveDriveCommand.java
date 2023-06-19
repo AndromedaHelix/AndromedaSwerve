@@ -43,7 +43,7 @@ public class SwerveDriveCommand extends CommandBase {
     swerve.drive(
         new Translation2d(translationYVal, translationXVal).times(SwerveConstants.maxSpeed),
         rotationVal * SwerveConstants.maxAngularVelocity,
-        fieldOriented.getAsBoolean(),
+        !fieldOriented.getAsBoolean(), // DEBUG fieldOriented.getAsBoolean()
         true);
   }
 
