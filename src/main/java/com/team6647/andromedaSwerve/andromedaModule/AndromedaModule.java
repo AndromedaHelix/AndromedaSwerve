@@ -11,7 +11,8 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.DemandType;
 import com.team6647.andromedaSwerve.utils.AndromedaModuleConstants;
 import com.team6647.andromedaSwerve.utils.AndromedaState;
-import com.team6647.util.Constants.SwerveConstants;
+import com.team6647.andromedaSwerve.utils.SwerveConstants;
+
 
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.math.geometry.Rotation2d;
@@ -102,5 +103,11 @@ public class AndromedaModule {
         public SwerveModuleState getState() {
                 return new SwerveModuleState(driveMotor.getVelocity(SwerveConstants.wheelCircumference,
                                 SwerveConstants.andromedaProfile.driveGearRatio), getAngle());
+        }
+
+        /* Telemetry */
+
+        public double[] getTemp(){
+                return new double[] {steeringMotor.getTemperature(), driveMotor.getTemperature()};
         }
 }
