@@ -3,17 +3,18 @@
  */
 package com.team6647.andromedaSwerve.systems;
 
+import java.util.ArrayList;
+
 import com.andromedalib.sensors.SuperNavx;
 import com.team6647.andromedaSwerve.andromedaModule.AndromedaModule;
 import com.team6647.andromedaSwerve.utils.AndromedaMap;
-import com.team6647.util.Constants.SwerveConstants;
+import com.team6647.andromedaSwerve.utils.SwerveConstants;
 
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj.Timer;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class AndromedaSwerve extends SubsystemBase {
@@ -44,14 +45,6 @@ public class AndromedaSwerve extends SubsystemBase {
 
   @Override
   public void periodic() {
-    for (AndromedaModule andromedaModule : modules) {
-      SmartDashboard.putNumber("Mod " + andromedaModule.getModuleNumber() + " Angle",
-          andromedaModule.getState().angle.getDegrees());
-      SmartDashboard.putNumber("Mod " + andromedaModule.getModuleNumber() + " Velocity",
-          andromedaModule.getState().speedMetersPerSecond);
-    }
-
-    SmartDashboard.putNumber("Angle", navx.getClampedYaw().getDegrees());
   }
 
   public void resetAbsoluteModules() {
@@ -76,5 +69,17 @@ public class AndromedaSwerve extends SubsystemBase {
     for (AndromedaModule andromedaModule : modules) {
       andromedaModule.setDesiredState(desiredStates[andromedaModule.getModuleNumber()], isOpenLoop);
     }
+  }
+
+  public ArrayList<Double> getModulesTemp() {
+
+    ArrayList<Double> temps = new ArrayList<>();
+
+    for (AndromedaModule andromedaModule : modules) {
+      for (int i = 0; i < 2; i++) {
+        temps.add(andromedaModule.getTemp()[i]);
+      }
+    }
+    return temps;
   }
 }
