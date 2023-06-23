@@ -3,8 +3,6 @@
  */
 package com.team6647.util.shuffleboard;
 
-import com.team6647.andromedaSwerve.systems.AndromedaSwerve;
-
 /**
  * Telemetry manager class. Change functions and parameters to suit your needs.
  * It is automatically updated by the {@link SuperRobot} class

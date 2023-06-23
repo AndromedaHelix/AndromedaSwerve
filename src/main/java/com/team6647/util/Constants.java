@@ -3,12 +3,6 @@
  */
 package com.team6647.util;
 
-import com.team6647.andromedaSwerve.utils.AndromedaProfileConfig;
-import com.team6647.andromedaSwerve.utils.AndromedaProfileConfig.AndromedaProfiles;
-
-import edu.wpi.first.math.geometry.Translation2d;
-import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
-import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
