@@ -14,12 +14,8 @@ public class SwerveConstants {
             .getConfig(AndromedaProfiles.ANDROMEDA_CONFIG);
 
     /* Drivetrain Constants */
-    public static final double trackWidth = Units.inchesToMeters(18.5); // TODO: This must be tuned to
-                                                                        // specific
-                                                                        // robot
-    public static final double wheelBase = Units.inchesToMeters(18.5); // TODO: This must be tuned to
-                                                                       // specific
-                                                                       // robot
+    public static final double trackWidth = Units.inchesToMeters(18.5); 
+    public static final double wheelBase = Units.inchesToMeters(18.5);
     public static final double wheelCircumference = andromedaProfile.wheelCircumference;
     public static final SwerveDriveKinematics swerveKinematics = new SwerveDriveKinematics(
             new Translation2d(wheelBase / 2.0, trackWidth / 2.0),

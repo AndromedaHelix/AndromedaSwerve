@@ -12,7 +12,7 @@ public class DebugTab extends ShuffleboardTabBase{
 
     @Override
     public void updateTelemetry() {
-        // TODO Auto-generated method stub
+    
         
     }
 
