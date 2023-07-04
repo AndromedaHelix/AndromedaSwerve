@@ -13,7 +13,6 @@ import com.team6647.andromedaSwerve.utils.AndromedaModuleConstants;
 import com.team6647.andromedaSwerve.utils.AndromedaState;
 import com.team6647.andromedaSwerve.utils.SwerveConstants;
 
-
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
@@ -37,18 +36,21 @@ public class AndromedaModule {
 
                 this.driveMotor = new SuperTalonFX(constants.driveMotorID, GlobalIdleMode.brake,
                                 SwerveConstants.andromedaProfile.driveMotorInvert,
-                                SwerveConstants.andromedaProfile.driveMotorConfiguration);
+                                SwerveConstants.andromedaProfile.driveMotorConfiguration,
+                                SwerveConstants.andromedaProfile.CANbus);
                 this.steeringMotor = new SuperTalonFX(constants.steeringMotorID, GlobalIdleMode.Coast,
                                 SwerveConstants.andromedaProfile.steeringMotorInvert,
-                                SwerveConstants.andromedaProfile.turningMotorConfiguration);
+                                SwerveConstants.andromedaProfile.turningMotorConfiguration,
+                                SwerveConstants.andromedaProfile.CANbus);
                 this.steeringEncoder = new SuperCANCoder(constants.absCanCoderID,
-                                SwerveConstants.andromedaProfile.cancoderConfig);
+                                SwerveConstants.andromedaProfile.cancoderConfig,
+                                SwerveConstants.andromedaProfile.CANbus);
 
                 this.angleOffset = constants.angleOffset;
 
                 resetAbsolutePosition();
 
-                lastAngle = Rotation2d.fromDegrees(0); // TODO: Fix with encoder
+                lastAngle = getAngle();
         }
 
         public int getModuleNumber() {
@@ -90,7 +92,7 @@ public class AndromedaModule {
         public void resetAbsolutePosition() {
                 steeringMotor.setSelectedSensorPosition(0);
                 double encoderPosition = Conversions.degreesToFalcon(
-                                steeringEncoder.getDegrees() - angleOffset.getDegrees(),
+                                steeringEncoder.getAbsolutePosition() - angleOffset.getDegrees(),
                                 SwerveConstants.andromedaProfile.steeringGearRatio);
                 steeringMotor.setSelectedSensorPosition(encoderPosition);
         }
@@ -107,7 +109,7 @@ public class AndromedaModule {
 
         /* Telemetry */
 
-        public double[] getTemp(){
-                return new double[] {steeringMotor.getTemperature(), driveMotor.getTemperature()};
+        public double[] getTemp() {
+                return new double[] { steeringMotor.getTemperature(), driveMotor.getTemperature() };
         }
 }
