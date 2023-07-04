@@ -29,11 +29,13 @@ public final class AndromedaProfileConfig {
         public final TalonFXConfiguration driveMotorConfiguration;
         public final TalonFXConfiguration turningMotorConfiguration;
 
+        public final String CANbus;
+
         public AndromedaProfileConfig(double steeringGearRatio, double driveGearRatio, double wheelDiameter,
                         TalonFXConfiguration driveMotorConfiguration, TalonFXConfiguration turningMotorConfiguration,
                         CANCoderConfiguration cancoderConfiguration,
                         boolean driveMotorInvert,
-                        boolean steeringMotorInvert, boolean cancoderInvert) {
+                        boolean steeringMotorInvert, boolean cancoderInvert, String CANBus) {
                 this.steeringGearRatio = steeringGearRatio;
                 this.driveGearRatio = driveGearRatio;
                 this.wheelDiameter = wheelDiameter;
@@ -47,6 +49,7 @@ public final class AndromedaProfileConfig {
                 this.driveMotorInvert = driveMotorInvert;
                 this.steeringMotorInvert = steeringMotorInvert;
                 this.canCoderInvert = cancoderInvert;
+                this.CANbus = CANBus;
         }
 
         public static enum AndromedaProfiles {
@@ -70,6 +73,8 @@ public final class AndromedaProfileConfig {
 
         /* Base Andromeda Swerve configuration profile */
         private static AndromedaProfileConfig andromedaSwerveConfig() {
+
+                String swerveCANBus = "6647_CANivore";
                 double wheelDiameter = Units.inchesToMeters(4.0);
 
                 double steeringGearRatio = ((150.0 / 7.0) / 1.0);
@@ -80,7 +85,7 @@ public final class AndromedaProfileConfig {
                 double turningKd = 0.0;
                 double turningKf = 0.0;
 
-                double driveKp = 0.3; // <- TODO Modify
+                double driveKp = 0.3;
                 double driveKi = 0.0;
                 double driveKd = 0.0;
                 double driveKf = 0.0;
@@ -153,6 +158,6 @@ public final class AndromedaProfileConfig {
                                 driveMotorConfig,
                                 turningMotorConfig, cancoderConfig,
                                 driveMotorInvert, angleMotorInvert,
-                                canCoderInvert);
+                                canCoderInvert, swerveCANBus);
         }
 }
