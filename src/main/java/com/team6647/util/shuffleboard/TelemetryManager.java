@@ -3,12 +3,12 @@
  */
 package com.team6647.util.shuffleboard;
 
+import com.andromedalib.robot.BaseTelemetryManager;
+
 /**
- * Telemetry manager class. Change functions and parameters to suit your needs.
- * It is automatically updated by the {@link SuperRobot} class
  * Handles selectors
  */
-public class TelemetryManager {
+public class TelemetryManager extends BaseTelemetryManager {
 
     private static TelemetryManager instance;
 
@@ -28,10 +28,12 @@ public class TelemetryManager {
         return instance;
     }
 
+    @Override
     public void initTelemetry() {
         interactions = ShuffleboardManager.getInstance();
     }
 
+    @Override
     public void updateTelemetry() {
         interactions.updateTelemetry();
     }

@@ -3,8 +3,6 @@
  */
 package com.andromedalib.robot;
 
-import com.team6647.util.shuffleboard.TelemetryManager;
-
 import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -12,7 +10,7 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
 
 public class SuperRobot extends TimedRobot {
     private SuperRobotContainer container;
-    private TelemetryManager telemetryManager;
+    private BaseTelemetryManager telemetryManager;
 
     private Command autonomousCommand;
 
@@ -24,8 +22,8 @@ public class SuperRobot extends TimedRobot {
      * 
      * @param container {@link SuperRobotContainer}
      */
-    public void setRobotContainer(SuperRobotContainer container, boolean useCamera) {
-        telemetryManager = TelemetryManager.getInstance();
+    public void setRobotContainer(SuperRobotContainer container, BaseTelemetryManager telemetryManager, boolean useCamera) {
+        this.telemetryManager = telemetryManager;
         this.container = container;
         this.useCamera = useCamera;
     }

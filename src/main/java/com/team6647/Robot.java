@@ -1,6 +1,7 @@
 package com.team6647;
 
 import com.andromedalib.robot.SuperRobot;
+import com.team6647.util.shuffleboard.TelemetryManager;
 
 public class Robot extends SuperRobot {
 
@@ -9,7 +10,7 @@ public class Robot extends SuperRobot {
     @Override
     public void robotInit() {
         container = RobotContainer.getInstance();
-        super.setRobotContainer(container, false);
+        super.setRobotContainer(container, TelemetryManager.getInstance(), false);
 
         super.robotInit();
     }
