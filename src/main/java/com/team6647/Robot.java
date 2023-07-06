@@ -9,7 +9,7 @@ public class Robot extends SuperRobot {
     @Override
     public void robotInit() {
         container = RobotContainer.getInstance();
-        super.setRobotContainer(container);
+        super.setRobotContainer(container, false);
 
         super.robotInit();
     }

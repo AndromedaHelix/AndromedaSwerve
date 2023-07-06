@@ -16,15 +16,18 @@ public class SuperRobot extends TimedRobot {
 
     private Command autonomousCommand;
 
+    private boolean useCamera;
+
     /**
      * Instantiates the {@link SuperRobotContainer}. Run this method before doing
      * anything else
      * 
      * @param container {@link SuperRobotContainer}
      */
-    public void setRobotContainer(SuperRobotContainer container) {
+    public void setRobotContainer(SuperRobotContainer container, boolean useCamera) {
         telemetryManager = TelemetryManager.getInstance();
         this.container = container;
+        this.useCamera = useCamera;
     }
 
     /**
@@ -46,7 +49,8 @@ public class SuperRobot extends TimedRobot {
         telemetryManager.initTelemetry();
         container.configureBindings();
 
-        CameraServer.startAutomaticCapture();
+        if (useCamera)
+            CameraServer.startAutomaticCapture();
 
         addPeriodic(() -> CommandScheduler.getInstance().run(), 0.01);
     }
