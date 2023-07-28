@@ -7,7 +7,7 @@ import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.util.Units;
 
 public class SwerveConstants {
-    /* Represents Swerve-wise constants */
+    /* Represents Swerve-wide constants */
 
     public static final double deadband = 0.1;
     public static final AndromedaProfileConfig andromedaProfile = AndromedaProfileConfig

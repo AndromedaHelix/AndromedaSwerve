@@ -7,7 +7,6 @@ import edu.wpi.first.networktables.GenericEntry;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 
 public class AndromedaSwerveInfo extends ShuffleboardTabBase {
-
     AndromedaSwerve andromedaSwerve = AndromedaSwerve.getInstance();
 
     GenericEntry[] temps = new GenericEntry[8];

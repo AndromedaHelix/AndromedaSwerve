@@ -38,7 +38,6 @@ public class SwerveDriveCommand extends CommandBase {
     addRequirements(swerve);
   }
 
-  // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
     double translationYVal = Functions.handleDeadband(translationY.getAsDouble(), SwerveConstants.deadband);
@@ -52,7 +51,7 @@ public class SwerveDriveCommand extends CommandBase {
     swerve.drive(
         new Translation2d(ySpeed, xSpeed).times(SwerveConstants.maxSpeed),
         rotationSpeed * SwerveConstants.maxAngularVelocity,
-        !fieldOriented.getAsBoolean(), // DEBUG fieldOriented.getAsBoolean()
+        !fieldOriented.getAsBoolean(), 
         true);
   }
 

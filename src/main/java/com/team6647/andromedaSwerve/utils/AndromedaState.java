@@ -3,7 +3,7 @@ package com.team6647.andromedaSwerve.utils;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 
-/* Copied over from https://github.com/Team364/BaseFalconSwerve/blob/main/src/main/java/frc/lib/util/CTREModuleState.java to inlucde CTRE State optimization */
+/* Copied over from https://github.com/Team364/BaseFalconSwerve/blob/main/src/main/java/frc/lib/util/CTREModuleState.java to include CTRE State optimization */
 public class AndromedaState {
 
     /**
