@@ -31,9 +31,10 @@ public class AndromedaModule {
                         SwerveConstants.driveKV,
                         SwerveConstants.driveKA);
 
-        public AndromedaModule(int moduleNumber, AndromedaModuleConstants constants) {
+        public AndromedaModule(int moduleNumber,
+                        AndromedaModuleConstants constants) {
                 this.moduleNumber = moduleNumber;
-
+                
                 this.driveMotor = new SuperTalonFX(constants.driveMotorID, GlobalIdleMode.brake,
                                 SwerveConstants.andromedaProfile.driveMotorInvert,
                                 SwerveConstants.andromedaProfile.driveMotorConfiguration,

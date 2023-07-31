@@ -1,6 +1,8 @@
 plugins {
     id "java"
     id "edu.wpi.first.GradleRIO" version "2023.1.1"
+    id "com.peterabeles.gversion" version "1.10"
+
 }
 
 sourceCompatibility = JavaVersion.VERSION_17
@@ -12,6 +14,20 @@ allprojects {
 	repositories {
 		maven { url 'https://www.jitpack.io' }
 	}
+}
+
+repositories {
+    maven {
+        url = uri("https://maven.pkg.github.com/Mechanical-Advantage/AdvantageKit")
+        credentials {
+            username = "Mechanical-Advantage-Bot"
+            password = "006700680070005f006e00560051006a0055004f004c006100790066006e0078006e003700510049005400420032004c004a006d0055007000730031006d0037004c005a003000760062007000630051"
+        }
+    }
+}
+
+configurations.all {
+    exclude group: "edu.wpi.first.wpilibj"
 }
 
 // Define my targets (RoboRIO) and artifacts (deployable files)
@@ -76,6 +92,9 @@ dependencies {
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.2'
 
 	implementation 'com.github.AndromedaHelix:AndromedaLib:2f26723c2d'
+    
+    def akitJson = new groovy.json.JsonSlurper().parseText(new File(projectDir.getAbsolutePath() + "/vendordeps/AdvantageKit.json").text)
+    annotationProcessor "org.littletonrobotics.akit.junction:junction-autolog:$akitJson.version"
 
 }
 
@@ -105,4 +124,14 @@ wpi.java.configureTestTasks(test)
 // Configure string concat to always inline compile
 tasks.withType(JavaCompile) {
     options.compilerArgs.add '-XDstringConcat=inline'
+}
+
+project.compileJava.dependsOn(createVersionFile)
+gversion {
+  srcDir       = "src/main/java/"
+  classPackage = "com.team6647.robot"
+  className    = "BuildConstants"
+  dateFormat   = "yyyy-MM-dd HH:mm:ss z"
+  timeZone     = "Mexico/Mexico_City" // Use preferred time zone
+  indent       = "  "
 }

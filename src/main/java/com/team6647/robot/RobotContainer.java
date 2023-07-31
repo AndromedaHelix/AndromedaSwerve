@@ -1,7 +1,7 @@
 /**
  * Written by Juan Pablo Gutiérrez
  */
-package com.team6647;
+package com.team6647.robot;
 
 import com.andromedalib.robot.SuperRobotContainer;
 import com.team6647.andromedaSwerve.commands.SwerveDriveCommand;
@@ -11,13 +11,15 @@ import com.team6647.util.Constants.OperatorConstants;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 
-public class RobotContainer extends SuperRobotContainer {
+public class RobotContainer {
   private static RobotContainer instance;
 
   /* Systems */
   private AndromedaSwerve andromedaSwerve;
 
   private RobotContainer() {
+    
+
   }
 
   public static RobotContainer getInstance() {
@@ -28,12 +30,10 @@ public class RobotContainer extends SuperRobotContainer {
     return instance;
   }
 
-  @Override
   public void initSubsystems() {
     andromedaSwerve = AndromedaSwerve.getInstance();
   }
 
-  @Override
   public void configureBindings() {
 
     andromedaSwerve.setDefaultCommand(
