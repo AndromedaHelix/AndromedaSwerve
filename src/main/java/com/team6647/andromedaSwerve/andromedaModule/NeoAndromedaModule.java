@@ -15,7 +15,7 @@ import com.team6647.andromedaSwerve.utils.SwerveConstants;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.DriverStation;
 
 public class NeoAndromedaModule {
     private int moduleNumber;
@@ -34,6 +34,10 @@ public class NeoAndromedaModule {
 
     public NeoAndromedaModule(int moduleNumber, AndromedaModuleConstants constants) {
         this.moduleNumber = moduleNumber;
+
+        if(SwerveConstants.andromedaProfile.motorConfig.equals("Falcon config")){
+            DriverStation.reportError("Neo AndromedaModule " + moduleNumber + " is using Falcon config. Please change your profile config selection to avoid unwanted behaviours", true);
+        }
 
         this.driveMotor = new SuperSparkMax(constants.driveMotorID, GlobalIdleMode.brake,
                 SwerveConstants.andromedaProfile.driveMotorInvert,
@@ -88,18 +92,7 @@ public class NeoAndromedaModule {
                 ? lastAngle
                 : desiredState.angle;
 
-        /*
-         * double val = steeringController.calculate(getState().angle.getDegrees(),
-         * angle.getDegrees());
-         * 
-         * SmartDashboard.putNumber("Val " + moduleNumber, val);
-         * 
-         * steeringMotor.set(val); // PIDCONTROLLER
-         */
-        SmartDashboard.putNumber("Angle " + moduleNumber, getAngle().getDegrees());
-
         setSparkAngle(angle.getDegrees());
-        //turningController.setReference(angle.getDegrees(), ControlType.kPosition); // SPARKMAX PID
 
         lastAngle = angle;
     }
@@ -108,11 +101,9 @@ public class NeoAndromedaModule {
         if (isOpenLoop) {
             double percentOutput = desiredState.speedMetersPerSecond / SwerveConstants.maxSpeed;
 
-            SmartDashboard.putNumber("Percent " + moduleNumber, percentOutput);
-
             driveMotor.set(percentOutput);
         } else {
-            // TODO set Closed loop
+            driveController.setReference(desiredState.speedMetersPerSecond, ControlType.kVelocity);
         }
     }
 
@@ -137,14 +128,11 @@ public class NeoAndromedaModule {
      *                             optimize method
      */
     public void setSparkAngle(double targetAngleInDegrees) {
-        // Get the current angle of the motor by reading the current rotation count and
-        // multiplying it by
-        // an experimentally derived ratio
+
         double currentSparkAngle = getAngle().getDegrees();
-        // Slide the target angle until it is close to the current angle
+
         double sparkRelativeTargetAngle = reboundValue(targetAngleInDegrees, currentSparkAngle);
-        // Ask the spark to turn to the new angle. Also, convert from degrees into
-        // native motor units (rotations).
+
         turningController.setReference(sparkRelativeTargetAngle,
                 ControlType.kPosition);
     }
