@@ -46,6 +46,8 @@ public final class AndromedaProfileConfig {
         public final int driveContinuousCurrentLimit;
         public final int angleContinuousCurrentLimit;
 
+        public final String motorConfig;
+
         public AndromedaProfileConfig(double steeringGearRatio, double driveGearRatio, double wheelDiameter,
                         TalonFXConfiguration driveMotorConfiguration, TalonFXConfiguration turningMotorConfiguration,
                         CANCoderConfiguration cancoderConfiguration,
@@ -78,6 +80,8 @@ public final class AndromedaProfileConfig {
 
                 this.driveContinuousCurrentLimit = 0;
                 this.angleContinuousCurrentLimit = 0;
+
+                this.motorConfig = "Falcon config";
         }
 
         public AndromedaProfileConfig(double steeringGearRatio, double driveGearRatio, double wheelDiameter,
@@ -111,6 +115,8 @@ public final class AndromedaProfileConfig {
                 this.driveMotorConfiguration = null;
                 this.turningMotorConfiguration = null;
                 this.cancoderConfig = cancoderConfig;
+
+                this.motorConfig = "Neo config";
         }
 
         public static enum AndromedaProfiles {
