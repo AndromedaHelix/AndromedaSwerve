@@ -15,6 +15,7 @@ import com.team6647.andromedaSwerve.utils.SwerveConstants;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class NeoAndromedaModule {
     private int moduleNumber;
@@ -87,11 +88,18 @@ public class NeoAndromedaModule {
                 ? lastAngle
                 : desiredState.angle;
 
-       /*  double val = steeringController.calculate(getState().angle.getDegrees(), angle.getDegrees());
+        /*
+         * double val = steeringController.calculate(getState().angle.getDegrees(),
+         * angle.getDegrees());
+         * 
+         * SmartDashboard.putNumber("Val " + moduleNumber, val);
+         * 
+         * steeringMotor.set(val); // PIDCONTROLLER
+         */
+        SmartDashboard.putNumber("Angle " + moduleNumber, getAngle().getDegrees());
 
-        steeringMotor.set(val);  */// PIDCONTROLLER
-
-        turningController.setReference(angle.getDegrees(), ControlType.kPosition); // SPARKMAX PID
+        setSparkAngle(angle.getDegrees());
+        //turningController.setReference(angle.getDegrees(), ControlType.kPosition); // SPARKMAX PID
 
         lastAngle = angle;
     }
@@ -99,6 +107,8 @@ public class NeoAndromedaModule {
     private void setSpeed(SwerveModuleState desiredState, boolean isOpenLoop) {
         if (isOpenLoop) {
             double percentOutput = desiredState.speedMetersPerSecond / SwerveConstants.maxSpeed;
+
+            SmartDashboard.putNumber("Percent " + moduleNumber, percentOutput);
 
             driveMotor.set(percentOutput);
         } else {
@@ -119,6 +129,39 @@ public class NeoAndromedaModule {
 
     public SwerveModuleState getState() {
         return new SwerveModuleState(driveMotor.getVelocity(), getAngle());
+    }
+
+    /**
+     * 
+     * @param targetAngleInDegrees target angle from WPI's swerve kinematics
+     *                             optimize method
+     */
+    public void setSparkAngle(double targetAngleInDegrees) {
+        // Get the current angle of the motor by reading the current rotation count and
+        // multiplying it by
+        // an experimentally derived ratio
+        double currentSparkAngle = getAngle().getDegrees();
+        // Slide the target angle until it is close to the current angle
+        double sparkRelativeTargetAngle = reboundValue(targetAngleInDegrees, currentSparkAngle);
+        // Ask the spark to turn to the new angle. Also, convert from degrees into
+        // native motor units (rotations).
+        turningController.setReference(sparkRelativeTargetAngle,
+                ControlType.kPosition);
+    }
+
+    private double reboundValue(double value, double anchor) {
+        double lowerBound = anchor - 180;
+        double upperBound = anchor + 180;
+
+        if (value < lowerBound) {
+            value = upperBound
+                    + ((value - lowerBound) % (upperBound - lowerBound));
+        } else if (value > upperBound) {
+            value = lowerBound
+                    + ((value - upperBound) % (upperBound - lowerBound));
+        }
+
+        return value;
     }
 
     /* Telemetry */
