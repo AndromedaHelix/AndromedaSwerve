@@ -4,15 +4,19 @@
 package com.team6647.andromedaSwerve.systems;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import com.andromedalib.sensors.SuperNavx;
 import com.team6647.andromedaSwerve.andromedaModule.AndromedaModule;
 import com.team6647.andromedaSwerve.utils.AndromedaMap;
 import com.team6647.andromedaSwerve.utils.SwerveConstants;
 
+import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
+import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -61,6 +65,35 @@ public class AndromedaSwerve extends SubsystemBase {
             : new ChassisSpeeds(translation.getX(), translation.getY(), rotation));
 
     setModuleStates(swerveModuleStates, isOpenLoop);
+  }
+
+  public Rotation2d getAngle() {
+    return navx.getClampedYaw();
+  }
+
+  public SwerveModuleState[] getStates() {
+
+    SwerveModuleState[] states = new SwerveModuleState[4];
+    for (AndromedaModule andromedaModule : modules) {
+      states[andromedaModule.getModuleNumber()] = andromedaModule.getState();
+    }
+
+    return states;
+  }
+
+  public SwerveModulePosition[] getPositions() {
+
+    SwerveModulePosition[] states = new SwerveModulePosition[4];
+    for (AndromedaModule andromedaModule : modules) {
+      states[andromedaModule.getModuleNumber()] = andromedaModule.getPosition();
+    }
+
+    return states;
+  }
+
+  public List<AndromedaModule> getModules(){
+    List<AndromedaModule> modulesList = Arrays.asList(modules);
+    return modulesList;
   }
 
   private void setModuleStates(SwerveModuleState[] desiredStates, boolean isOpenLoop) {
