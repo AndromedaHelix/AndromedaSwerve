@@ -25,11 +25,11 @@ public class ShuffleboardManager {
         if (debug) {
             tabs = new ShuffleboardTabBase[] {
                 new DebugTab(ShuffleboardConstants.kShuffleboardTab),
-                new AndromedaSwerveInfo(ShuffleboardConstants.kShuffleboardTab),
+                new AndromedaSwerveInfo(ShuffleboardConstants.kShuffleboardTab, false),
             };
         } else {
             tabs = new ShuffleboardTabBase[] {
-                new AndromedaSwerveInfo(ShuffleboardConstants.kShuffleboardTab),
+                new AndromedaSwerveInfo(ShuffleboardConstants.kShuffleboardTab, false),
                 new DefaultTab(ShuffleboardConstants.kShuffleboardTab),
             };
         }
