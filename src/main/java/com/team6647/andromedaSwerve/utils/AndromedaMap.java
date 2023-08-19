@@ -2,7 +2,7 @@
  * Written by Juan Pablo Gutiérrez
  */
 
-package com.andromedalib.andromedaSwerve.utils;
+package com.team6647.andromedaSwerve.utils;
 
 import edu.wpi.first.math.geometry.Rotation2d;
 
