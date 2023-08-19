@@ -15,6 +15,7 @@ import com.team6647.andromedaSwerve.utils.SwerveConstants;
 
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj.DriverStation;
 
@@ -35,9 +36,11 @@ public class AndromedaModule {
         public AndromedaModule(int moduleNumber, AndromedaModuleConstants constants) {
                 this.moduleNumber = moduleNumber;
 
-                if(SwerveConstants.andromedaProfile.motorConfig.equals("Neo config")){
-                        DriverStation.reportError("AndromedaModule " + moduleNumber + " is using Neo config. Please change your profile config selection to avoid unwanted behaviours", true);
-                    }
+                if (SwerveConstants.andromedaProfile.motorConfig.equals("Neo config")) {
+                        DriverStation.reportError("AndromedaModule " + moduleNumber
+                                        + " is using Neo config. Please change your profile config selection to avoid unwanted behaviours",
+                                        true);
+                }
 
                 this.driveMotor = new SuperTalonFX(constants.driveMotorID, GlobalIdleMode.brake,
                                 SwerveConstants.andromedaProfile.driveMotorInvert,
@@ -99,7 +102,12 @@ public class AndromedaModule {
                 double encoderPosition = Conversions.degreesToFalcon(
                                 steeringEncoder.getAbsolutePosition() - angleOffset.getDegrees(),
                                 SwerveConstants.andromedaProfile.steeringGearRatio);
-                steeringMotor.setSelectedSensorPosition(encoderPosition);
+                try {
+                        Thread.sleep(1000);
+                } catch (Exception e) {
+
+                }
+                steeringMotor.setSelectedSensorPosition(encoderPosition); //Encoder positions
         }
 
         private Rotation2d getAngle() {
@@ -110,6 +118,12 @@ public class AndromedaModule {
         public SwerveModuleState getState() {
                 return new SwerveModuleState(driveMotor.getVelocity(SwerveConstants.wheelCircumference,
                                 SwerveConstants.andromedaProfile.driveGearRatio), getAngle());
+        }
+
+        public SwerveModulePosition getPosition() {
+                return new SwerveModulePosition(
+                                driveMotor.getPosition(SwerveConstants.wheelCircumference, SwerveConstants.andromedaProfile.driveGearRatio),
+                                getAngle());
         }
 
         /* Telemetry */
