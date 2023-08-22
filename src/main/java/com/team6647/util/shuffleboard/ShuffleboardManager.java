@@ -1,7 +1,7 @@
 package com.team6647.util.shuffleboard;
 
 import com.andromedalib.shuffleboard.ShuffleboardTabBase;
-import com.team6647.andromedaSwerve.utils.shufflleboard.tabs.AndromedaSwerveInfo;
+import com.andromedalib.andromedaSwerve.utils.shufflleboard.tabs.AndromedaSwerveInfo;
 import com.team6647.util.Constants.ShuffleboardConstants;
 import com.team6647.util.shuffleboard.tabs.DebugTab;
 import com.team6647.util.shuffleboard.tabs.DefaultTab;
