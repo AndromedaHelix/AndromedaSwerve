@@ -4,8 +4,10 @@
 package com.team6647;
 
 import com.andromedalib.robot.SuperRobotContainer;
-import com.team6647.andromedaSwerve.commands.SwerveDriveCommand;
-import com.team6647.andromedaSwerve.systems.AndromedaSwerve;
+import com.andromedalib.andromedaSwerve.andromedaModule.FalconAndromedaModule;
+import com.andromedalib.andromedaSwerve.commands.SwerveDriveCommand;
+import com.andromedalib.andromedaSwerve.systems.AndromedaSwerve;
+import com.andromedalib.andromedaSwerve.utils.AndromedaMap;
 import com.team6647.util.Constants.OperatorConstants;
 
 import edu.wpi.first.wpilibj2.command.Command;
@@ -30,7 +32,11 @@ public class RobotContainer extends SuperRobotContainer {
 
   @Override
   public void initSubsystems() {
-    andromedaSwerve = AndromedaSwerve.getInstance();
+    andromedaSwerve = AndromedaSwerve.getInstance(new FalconAndromedaModule[] {
+        new FalconAndromedaModule(0, "Front Right Module", AndromedaMap.mod1Const),
+        new FalconAndromedaModule(1, "Back Right Module", AndromedaMap.mod2Const),
+        new FalconAndromedaModule(2, "Back Left Module", AndromedaMap.mod3Const),
+        new FalconAndromedaModule(3, "Front Lert Module", AndromedaMap.mod4Const), });
   }
 
   @Override

@@ -1,7 +1,7 @@
 /**
  * Written by Juan Pablo Gutiérrez
  */
-package com.team6647.andromedaSwerve.utils;
+package com.andromedalib.andromedaSwerve.utils;
 
 import com.ctre.phoenix.motorcontrol.SupplyCurrentLimitConfiguration;
 import com.ctre.phoenix.motorcontrol.can.TalonFXConfiguration;

@@ -1,7 +1,7 @@
 /**
  * Written by Juan Pablo Gutiérrez
  */
-package com.team6647.andromedaSwerve.andromedaModule;
+package com.andromedalib.andromedaSwerve.andromedaModule;
 
 import com.andromedalib.math.Conversions;
 import com.andromedalib.motorControllers.SuperTalonFX;
@@ -9,18 +9,20 @@ import com.andromedalib.motorControllers.IdleManager.GlobalIdleMode;
 import com.andromedalib.sensors.SuperCANCoder;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.DemandType;
-import com.team6647.andromedaSwerve.utils.AndromedaModuleConstants;
-import com.team6647.andromedaSwerve.utils.AndromedaState;
-import com.team6647.andromedaSwerve.utils.SwerveConstants;
+import com.andromedalib.andromedaSwerve.utils.AndromedaModuleConstants;
+import com.andromedalib.andromedaSwerve.utils.AndromedaState;
+import com.andromedalib.andromedaSwerve.utils.SwerveConstants;
 
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-public class AndromedaModule {
+public class FalconAndromedaModule implements AndromedaModule {
         private int moduleNumber;
+        private String moduleName;
 
         private SuperTalonFX driveMotor;
         private SuperTalonFX steeringMotor;
@@ -33,8 +35,9 @@ public class AndromedaModule {
                         SwerveConstants.driveKV,
                         SwerveConstants.driveKA);
 
-        public AndromedaModule(int moduleNumber, AndromedaModuleConstants constants) {
+        public FalconAndromedaModule(int moduleNumber, String moduleName, AndromedaModuleConstants constants) {
                 this.moduleNumber = moduleNumber;
+                this.moduleName = moduleName;
 
                 if (SwerveConstants.andromedaProfile.motorConfig.equals("Neo config")) {
                         DriverStation.reportError("AndromedaModule " + moduleNumber
@@ -61,10 +64,17 @@ public class AndromedaModule {
                 lastAngle = getAngle();
         }
 
+        @Override
         public int getModuleNumber() {
                 return moduleNumber;
         }
 
+        @Override
+        public String getModuleName() {
+                return moduleName;
+        }
+
+        @Override
         public void setDesiredState(SwerveModuleState desiredState, boolean isOpenLoop) {
                 desiredState = AndromedaState.optimize(desiredState, getState().angle);
 
@@ -77,6 +87,7 @@ public class AndromedaModule {
                                 ? lastAngle
                                 : desiredState.angle;
 
+                SmartDashboard.putNumber(getModuleName(), angle.getDegrees());
                 steeringMotor.set(ControlMode.Position,
                                 Conversions.degreesToFalcon(angle.getDegrees(),
                                                 SwerveConstants.andromedaProfile.steeringGearRatio));
@@ -97,6 +108,7 @@ public class AndromedaModule {
                 }
         }
 
+        @Override
         public void resetAbsolutePosition() {
                 steeringMotor.setSelectedSensorPosition(0);
                 double encoderPosition = Conversions.degreesToFalcon(
@@ -107,7 +119,7 @@ public class AndromedaModule {
                 } catch (Exception e) {
 
                 }
-                steeringMotor.setSelectedSensorPosition(encoderPosition); //Encoder positions
+                steeringMotor.setSelectedSensorPosition(encoderPosition); // Encoder positions
         }
 
         private Rotation2d getAngle() {
@@ -115,19 +127,23 @@ public class AndromedaModule {
                                 steeringMotor.getAngle(SwerveConstants.andromedaProfile.steeringGearRatio));
         }
 
+        @Override
         public SwerveModuleState getState() {
                 return new SwerveModuleState(driveMotor.getVelocity(SwerveConstants.wheelCircumference,
                                 SwerveConstants.andromedaProfile.driveGearRatio), getAngle());
         }
 
+        @Override
         public SwerveModulePosition getPosition() {
                 return new SwerveModulePosition(
-                                driveMotor.getPosition(SwerveConstants.wheelCircumference, SwerveConstants.andromedaProfile.driveGearRatio),
+                                driveMotor.getPosition(SwerveConstants.wheelCircumference,
+                                                SwerveConstants.andromedaProfile.driveGearRatio),
                                 getAngle());
         }
 
         /* Telemetry */
 
+        @Override
         public double[] getTemp() {
                 return new double[] { steeringMotor.getTemperature(), driveMotor.getTemperature() };
         }

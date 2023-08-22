@@ -1,6 +1,6 @@
-package com.team6647.andromedaSwerve.utils;
+package com.andromedalib.andromedaSwerve.utils;
 
-import com.team6647.andromedaSwerve.utils.AndromedaProfileConfig.AndromedaProfiles;
+import com.andromedalib.andromedaSwerve.utils.AndromedaProfileConfig.AndromedaProfiles;
 
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
@@ -18,10 +18,10 @@ public class SwerveConstants {
     public static final double wheelBase = Units.inchesToMeters(18.5);
     public static final double wheelCircumference = andromedaProfile.wheelCircumference;
     public static final SwerveDriveKinematics swerveKinematics = new SwerveDriveKinematics(
-            new Translation2d(wheelBase / 2.0, trackWidth / 2.0),
-            new Translation2d(-wheelBase / 2.0, trackWidth / 2.0),
+            new Translation2d(wheelBase / 2.0, -trackWidth / 2.0),
             new Translation2d(-wheelBase / 2.0, -trackWidth / 2.0),
-            new Translation2d(wheelBase / 2.0, -trackWidth / 2.0));
+            new Translation2d(-wheelBase / 2.0, trackWidth / 2.0),
+            new Translation2d(wheelBase / 2.0, trackWidth / 2.0));
 
     /*
      * Drive Motor Characterization Values

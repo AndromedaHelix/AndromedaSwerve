@@ -1,14 +1,14 @@
 /**
  * Written by Juan Pablo Gutiérrez
  */
-package com.team6647.andromedaSwerve.commands;
+package com.andromedalib.andromedaSwerve.commands;
 
 import java.util.function.BooleanSupplier;
 import java.util.function.DoubleSupplier;
 
 import com.andromedalib.math.Functions;
-import com.team6647.andromedaSwerve.systems.AndromedaSwerve;
-import com.team6647.andromedaSwerve.utils.SwerveConstants;
+import com.andromedalib.andromedaSwerve.systems.AndromedaSwerve;
+import com.andromedalib.andromedaSwerve.utils.SwerveConstants;
 
 import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.math.geometry.Translation2d;
